@@ -7,7 +7,7 @@ import pylab as pl
 def prettyPicture(clf, X_test, y_test):
     x_min = 0.0; x_max = 1.0
     y_min = 0.0; y_max = 1.0
-    
+
     # Plot the decision boundary. For that, we will assign a color to each
     # point in the mesh [x_min, m_max]x[y_min, y_max].
     h = .01  # step size in the mesh
@@ -34,17 +34,17 @@ def prettyPicture(clf, X_test, y_test):
     plt.ylabel("grade")
 
     plt.savefig("test.png")
-
-import base64
-import json
-import subprocess
-
-def output_image(name, format, bytes):
-    image_start = "BEGIN_IMAGE_f9825uweof8jw9fj4r8"
-    image_end = "END_IMAGE_0238jfw08fjsiufhw8frs"
-    data = {}
-    data['name'] = name
-    data['format'] = format
-    data['bytes'] = base64.encodestring(bytes)
-    print image_start+json.dumps(data)+image_end
-                                    
+# 
+# import base64
+# import json
+# import subprocess
+#
+# def output_image(name, format, bytes):
+#     image_start = "BEGIN_IMAGE_f9825uweof8jw9fj4r8"
+#     image_end = "END_IMAGE_0238jfw08fjsiufhw8frs"
+#     data = {}
+#     data['name'] = name
+#     data['format'] = format
+#     data['bytes'] = base64.encodestring(bytes)
+#     print image_start+json.dumps(data)+image_end
+#

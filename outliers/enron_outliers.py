@@ -5,15 +5,38 @@ import sys
 import matplotlib.pyplot
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
+import pprint
 
 
 ### read in data dictionary, convert to numpy array
-data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
+data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "rb") )
 features = ["salary", "bonus"]
+data_dict.pop('TOTAL', 0)
 data = featureFormat(data_dict, features)
 
 
 ### your code below
+key, top = '', 0
+for key, value in data_dict.items():
+    if value['bonus'] == 'NaN':
+        continue
+
+    if top < int(value['bonus']):
+        top = value['bonus']
+        name = key
+
+    if value['salary'] > 1000000:
+        print(key, value['salary'], value['bonus'])
 
 
+print(name, top)
 
+
+for point in data:
+    salary = point[0]
+    bonus = point[1]
+    matplotlib.pyplot.scatter( salary, bonus )
+
+matplotlib.pyplot.xlabel("salary")
+matplotlib.pyplot.ylabel("bonus")
+matplotlib.pyplot.show()
