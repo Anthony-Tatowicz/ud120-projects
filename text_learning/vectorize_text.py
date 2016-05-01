@@ -8,6 +8,9 @@ import sys
 sys.path.append( "../tools/" )
 from parse_out_email_text import parseOutText
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from nltk.corpus import stopwords
+
 """
     Starter code to process the emails from Sara and Chris to extract
     the features and get the documents ready for classification.
@@ -41,35 +44,49 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
     for path in from_person:
         ### only look at first 200 emails when developing
         ### once everything is working, remove this line to run over full dataset
-        temp_counter += 1
+        # temp_counter += 1
         if temp_counter < 200:
             path = os.path.join('..', path[:-1])
-            print path
+            print(path)
             email = open(path, "r")
 
             ### use parseOutText to extract the text from the opened email
-
+            words = parseOutText(email)
             ### use str.replace() to remove any instances of the words
-            ### ["sara", "shackleton", "chris", "germani"]
+            exclude = ["sara", "shackleton", "chris", "germani"]
+
+            for w in exclude:
+                if w in words:
+                    words = words.replace(w, '')
 
             ### append the text to word_data
-
+            word_data.append(words)
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-
+            if name == 'sara':
+                from_data.append(0)
+            else:
+                from_data.append(1)
 
             email.close()
 
-print "emails processed"
+
+print("emails processed")
 from_sara.close()
 from_chris.close()
 
-pickle.dump( word_data, open("your_word_data.pkl", "w") )
-pickle.dump( from_data, open("your_email_authors.pkl", "w") )
-
+pickle.dump( word_data, open("your_word_data.pkl", "wb") )
+pickle.dump( from_data, open("your_email_authors.pkl", "wb") )
 
 
 
 
 ### in Part 4, do TfIdf vectorization here
+sw = stopwords.words('english')
+transformer = TfidfVectorizer(stop_words='english')
+tfidf = transformer.fit_transform(word_data)
 
+pickle.dump(tfidf, open("tfidf.pkl", 'wb'))
+pickle.dump(transformer, open('transformer.pkl', 'wb'))
 
+feature_count = len(transformer.get_feature_names())
+print('Number of features: {}'.format(feature_count))
