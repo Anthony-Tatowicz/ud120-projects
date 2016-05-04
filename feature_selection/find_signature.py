@@ -46,12 +46,11 @@ clf.fit(features_train, labels_train)
 for i, x in enumerate(clf.feature_importances_):
     if x > .2:
         print(i, ' : ',  x)
+        words = vectorizer.get_feature_names()
+        print(words[i])
 
 pred = clf.predict(features_test)
 
 score = accuracy_score(labels_test, pred)
 
 print('Score : {}'.format(score))
-
-word = vectorizer.get_feature_names()
-print(word[33614])
