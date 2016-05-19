@@ -55,9 +55,9 @@ print('Email Count: {}'.format(known_emails))
 print('Salaries Count: {}'.format(salary_count))
 print('No total_payments: {}'.format(no_total_payment))
 print('No total_payments (adjusted): {}'.format(no_total_payment + 10))
-print('No total_payments percent: {:.2%}'.format(no_total_payment / len(enron_data)))
-print("POI's with no total_payments: {:.2%}".format(poi_no_payment / len(enron_data)))
-print("POI's with no total_payments (adjusted): {:.2%}".format((poi_no_payment + 10) / (len(enron_data) + 10)))
+print('No total_payments percent: {:.2%}'.format(float(no_total_payment) / len(enron_data)))
+print("POI's with no total_payments: {:.2%}".format(float(poi_no_payment) / len(enron_data)))
+print("POI's with no total_payments (adjusted): {:.2%}".format(float((poi_no_payment + 10)) / (len(enron_data) + 10)))
 
 
 # print(enron_data["LAY KENNETH L"]['total_payments'])
